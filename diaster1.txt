@@ -67,7 +67,7 @@ void loop() {
 
   bool alert = false;
 
-  // ⚠️ Adjust thresholds based on your testing
+  //  Adjust thresholds based on your testing
   if (rain < 50) {
     Serial.println("Rain Detected!");
     alert = true;
@@ -88,7 +88,7 @@ void loop() {
     alert = true;
   }
 
-  // 🔊 ALERT SYSTEM
+  //  ALERT SYSTEM
   if (alert) {
     digitalWrite(BUZZER, HIGH);
 
