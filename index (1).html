@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMART DISASTER MONITORING SYSTEM</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="background-grid"></div>
+  
+  <div class="dashboard-container">
+    
+    <!-- Header -->
+    <header class="glass-panel header">
+      <div class="header-left">
+        <div class="logo-icon"></div>
+        <h1>SMART DISASTER MONITORING SYSTEM</h1>
+      </div>
+      <div class="header-right">
+        <div class="status-indicator">
+          <span class="pulse-dot" id="connection-dot"></span>
+          <span id="connection-text">Connecting...</span>
+        </div>
+        <div class="clock" id="clock">00:00:00</div>
+      </div>
+    </header>
+
+    <!-- Alert Banner -->
+    <div class="alert-banner hidden" id="alert-banner">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-message" id="alert-message">NO CRITICAL ALERTS</div>
+    </div>
+
+    <!-- Main Content Layout -->
+    <main class="main-content">
+      
+      <!-- Left Column: Gauges -->
+      <section class="gauges-panel">
+        
+        <!-- Rain Level Gauge -->
+        <div class="glass-card gauge-card">
+          <div class="card-header">
+            <h3>RAIN LEVEL</h3>
+            <span class="icon">🌧️</span>
+          </div>
+          <div class="gauge-container circular-gauge">
+            <svg viewBox="0 0 100 100">
+              <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
+              <circle class="gauge-value" id="rain-gauge" cx="50" cy="50" r="40" stroke="var(--neon-blue)"></circle>
+            </svg>
+            <div class="gauge-center">
+              <span class="value" id="rain-val">0</span>
+              <span class="unit">mm</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Soil Moisture Gauge -->
+        <div class="glass-card gauge-card">
+          <div class="card-header">
+            <h3>SOIL MOISTURE</h3>
+            <span class="icon">🌱</span>
+          </div>
+          <div class="gauge-container radial-gauge">
+            <svg viewBox="0 0 100 100">
+              <path class="gauge-bg" d="M 20 80 A 40 40 0 1 1 80 80" fill="none"></path>
+              <path class="gauge-value" id="soil-gauge" d="M 20 80 A 40 40 0 1 1 80 80" fill="none" stroke="var(--neon-green)"></path>
+            </svg>
+            <div class="gauge-center semi">
+              <span class="value" id="soil-val">0</span>
+              <span class="unit">%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Temperature Dial -->
+        <div class="glass-card gauge-card">
+          <div class="card-header">
+            <h3>TEMPERATURE</h3>
+            <span class="icon">🌡️</span>
+          </div>
+          <div class="gauge-container dial-gauge">
+            <div class="dial-bg"></div>
+            <div class="dial-needle" id="temp-needle"></div>
+            <div class="gauge-center full">
+              <span class="value" id="temp-val">0</span>
+              <span class="unit">°C</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Humidity Semi-Circle -->
+        <div class="glass-card gauge-card">
+          <div class="card-header">
+            <h3>HUMIDITY</h3>
+            <span class="icon">💧</span>
+          </div>
+          <div class="gauge-container semi-circle-gauge">
+            <svg viewBox="0 0 100 50">
+              <path class="gauge-bg" d="M 10 45 A 35 35 0 0 1 90 45" fill="none"></path>
+              <path class="gauge-value" id="hum-gauge" d="M 10 45 A 35 35 0 0 1 90 45" fill="none" stroke="var(--neon-purple)"></path>
+            </svg>
+            <div class="gauge-center semi bottom">
+              <span class="value" id="hum-val">0</span>
+              <span class="unit">%</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Center & Right Columns -->
+      <section class="data-panel">
+        
+        <!-- System Status Overall -->
+        <div class="glass-card status-card" id="system-status-card">
+          <h2>SYSTEM STATUS</h2>
+          <div class="status-display">
+            <div class="status-glow" id="status-glow"></div>
+            <div class="status-text" id="status-text">NORMAL</div>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+          
+          <!-- Temp/Hum Line Chart -->
+          <div class="glass-card chart-card wide">
+            <div class="card-header">
+              <h3>ENVIRONMENT TRENDS</h3>
+            </div>
+            <div class="chart-container">
+              <canvas id="envChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Light Sensor Bar Chart -->
+          <div class="glass-card chart-card">
+            <div class="card-header">
+              <h3>LIGHT LEVEL (LDR)</h3>
+              <span class="icon">☀️</span>
+            </div>
+            <div class="chart-container">
+              <canvas id="lightChart"></canvas>
+            </div>
+            <div class="big-value-display">
+              <span id="ldr-val" class="neon-text">0</span>
+              <span class="unit">LUX</span>
+            </div>
+          </div>
+
+          <!-- Alert History Log -->
+          <div class="glass-card log-card">
+            <div class="card-header">
+              <h3>ALERT HISTORY</h3>
+            </div>
+            <div class="log-container" id="alert-log">
+              <!-- Logs will be injected here -->
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
